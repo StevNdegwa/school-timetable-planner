@@ -26,3 +26,41 @@ a{
 ul{
   list-style-type:none;
 }
+
+input{
+  width:100%;
+  padding:0 0.5em;
+  display:block;
+  border:none;
+  outline:none;
+  &:focus{
+    outline:none;
+  }
+}
+
+button{
+  border:none;
+  outline:none;
+  color:#263238;
+  font-weight:600;
+  cursor:pointer;
+  &:focus{
+    outline:none;
+  }
+  &.primary{
+    background-color:#212dce;
+    color:white;
+    box-shadow:0px 0px 2px #212dce;
+    &:hover{
+      box-shadow:0px 0px 5px #212dce;
+    }
+    &:disabled{
+      background-color:#bdbdbd;
+      color:#263238;
+      box-shadow:0px 0px 2px #bdbdb;
+      &:hover{
+        box-shadow:0px 0px 5px #bdbdbd;
+      }
+    }
+  }
+}

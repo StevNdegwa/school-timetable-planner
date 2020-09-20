@@ -14,7 +14,6 @@ stages:
 cache:
     paths:
        - node_modules/
-       - build/
     key: "$CI_BUILD_REPO"
 
 test-app:
@@ -30,6 +29,9 @@ build-app:
        - master
     script:
        - npm run build
+    artifacts:
+        paths:
+           - build
 
 deploy-app:
     stage: deploy

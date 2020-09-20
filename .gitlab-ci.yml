@@ -21,7 +21,7 @@ test-app:
     stage: test
     only:
        - master
-    script
+    script:
        - npm run test
 
 build-app:

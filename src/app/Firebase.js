@@ -16,8 +16,7 @@ class Firebase{
     try{
       app.initializeApp(config);
     }catch(error){
-      console.log("---------------Firebase Initialize------------------")
-      console.log(error)
+      
     }
     this.auth = app.auth();
   }

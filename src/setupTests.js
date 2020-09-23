@@ -8,3 +8,8 @@ import Enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 
 Enzyme.configure({adapter:new Adapter()});
+
+const root = global.document.createElement("div");
+root.setAttribute("id", "root");
+const body = global.document.querySelector("body");
+body.appendChild(root);

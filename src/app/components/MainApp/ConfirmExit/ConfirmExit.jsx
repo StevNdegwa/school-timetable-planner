@@ -9,7 +9,7 @@ export default function ConfirmExit({visible, close}){
   
   async function confirmUserExit(){
     try{
-      let signOut = await firebaseContext.signOutUser()
+      await firebaseContext.signOutUser()
       
       return close((s)=>({confirmed:true, dialog:false}));
     }catch(error){

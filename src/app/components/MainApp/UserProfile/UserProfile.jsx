@@ -3,11 +3,11 @@ import {CSSTransition} from "react-transition-group";
 import {MdAccountCircle} from "react-icons/md";
 import {Wrapper, Control, Content} from "./styles";
 
-import FirebaseContext from "../../../FirebaseContext";
+//import FirebaseContext from "../../../FirebaseContext";
 
 const UserProfile = React.memo(()=>{
   const [contentVisible, setContentVisible] = React.useState(false);
-  const firebaseContext = React.useContext(FirebaseContext);
+  //const firebaseContext = React.useContext(FirebaseContext);
   
   function handleBodyClick(){
     setContentVisible(false);

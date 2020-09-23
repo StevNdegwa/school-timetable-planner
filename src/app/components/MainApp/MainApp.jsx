@@ -11,11 +11,11 @@ import Admin from "./Admin";
 import {Wrapper, Header, Main} from "./styles";
 import Modal from "../Modal";
 
-import FirebaseContext from "../../FirebaseContext";
+//import FirebaseContext from "../../FirebaseContext";
 
 export default function MainApp(props){
   const [confirmExit, setConfirmExit] = useState({confirmed:false, dialog:false})
-  const firebaseContext = React.useContext(FirebaseContext);
+  //const firebaseContext = React.useContext(FirebaseContext);
   
   if(confirmExit.confirmed || !props.currentUser){
     return (<Redirect to="/"/>);

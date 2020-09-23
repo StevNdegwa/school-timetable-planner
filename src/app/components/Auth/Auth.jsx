@@ -24,7 +24,7 @@ export default function Auth({setCurrentUser, currentUser}){
         setCurrentUser({displayName, email, photoURL, uid});
       }
     })
-  }, [authStatus.successful]);
+  }, [authStatus.successful, firebaseContext, setCurrentUser]);
   
   function setLoading(loading){
     return setAuthStatus({successful:false, error:null, loading});

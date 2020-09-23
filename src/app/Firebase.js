@@ -13,7 +13,17 @@ const config = {
 
 class Firebase{
   constructor(){
-    app.initializeApp(config);
+    try{
+      app.initializeApp(config);
+    }catch(error){
+      console.log("---------------Firebase Initialize------------------")
+      console.log(error)
+    }
+    this.auth = app.auth();
+  }
+  
+  getAuth(){
+    return app.auth();
   }
   
   signInWithGoogle(){
@@ -25,13 +35,24 @@ class Firebase{
     return app.auth().signInWithPopup(provider)
   }
   
-  signUpNewUser(email, password){
-    return app.auth().createUserWithEmailAndPassword(email, password);
+  signUpNewUser(email, password, displayName){
+    return app.auth().createUserWithEmailAndPassword(email, password)
+    .then((result)=>{
+      result.user.updateProfile({displayName});
+      return result;
+    });
   }
   
   signInUser(email, password){
     return app.auth().signInWithEmailAndPassword(email, password);
   }
   
+  signOutUser(){
+    return app.auth().signOut().then(function(){
+      console.log("Sign out successful");
+    })
+  }
+  
 }
+
 export default Firebase;

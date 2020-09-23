@@ -1,4 +1,5 @@
-import styled, {css} from "styled-components";
+import styled, {css, keyframes} from "styled-components";
+import {FiLoader} from "react-icons/fi";
 
 export const Wrapper = styled.div`
 width:100%;
@@ -11,14 +12,50 @@ height:70px;
 box-shadow:0px 2px 5px #bdbdbd;
 display:flex;
 justify-content:space-between;
+position:relative;
 & > div{
   height:100%;
   line-height:70px;
-  & svg{
+  &>svg{
     width:30px;
     height:70px;
   }
 }
+`;
+
+const authLoaderAnim = keyframes`
+from{
+  transform:rotate(0deg);
+}
+to{
+  transform:rotate(360deg);
+}
+`;
+
+export const AuthStatus = styled.div`
+min-height:80px;
+padding:0.5em;
+position:absolute;
+top:100%;
+left:50%;
+transform:translate(-50%,0);
+border:1px solid #bdbdbd;
+box-shadow:0px 5px 5px #bdbdbd;
+background-color:white;
+text-align:center;
+${({show})=> !show && css`
+display:none;
+`};
+`;
+
+
+export const Loader = styled(FiLoader)`
+width:100px;
+height:80px;
+animation-name:${authLoaderAnim};
+animation-iteration-count:infinite;
+animation-duration:1s;
+animatio-timing-function:linear;
 `;
 
 export const Main = styled.div`

@@ -1,8 +1,9 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {MdSettings, MdSupervisorAccount, MdInsertInvitation, MdHome, MdSettingsPower} from "react-icons/md";
 import {Wrapper, SideLink, Exit} from "./styles";
 
-export default function Sidenav(){
+export default function Sidenav({exitApp}){
   return (<Wrapper>
     <div></div>
     <div>
@@ -11,6 +12,10 @@ export default function Sidenav(){
       <SideLink to="/settings" activeClassName="selected"><MdSettings/></SideLink>
       <SideLink to="/admin" activeClassName="selected"><MdSupervisorAccount/></SideLink>
     </div>
-    <Exit><MdSettingsPower/></Exit>
+    <Exit onClick={()=>exitApp()}><MdSettingsPower/></Exit>
   </Wrapper>)
+}
+
+Sidenav.propTypes = {
+  exitApp:PropTypes.func.isRequired
 }

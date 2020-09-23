@@ -6,6 +6,7 @@ export const Wrapper = styled.div`
 width:60px;
 height:100%;
 background-color:#212dce;
+border-right:1px outset #212dce; 
 display:flex;
 flex-direction:column;
 justify-content:space-between;
@@ -27,6 +28,7 @@ transition:background-color 500ms, box-shadow 1s;
   box-shadow:0px 0px 3px #252d98;
   color:#bdbdbd;
 }
+
 &>svg{
   width:30px;
   height:50px;
@@ -37,11 +39,13 @@ export const Exit = styled.button`
 width:60px;
 height:50px;
 display:block;
-border-top:1px solid #bdbdbd;
+border-top:1px solid #949aeb;
 text-align:center;
+color:#949aeb;
 background-color:transparent;
+box-sizing:content-box;
 &>svg{
   height:45px;
   width:30px;
 }
-`
+`;

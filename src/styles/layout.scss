@@ -73,3 +73,31 @@ div#root{
   opacity:0;
   transition:transform 500ms;
 }
+
+/* Slide from right */
+.fade-enter{
+  width:0;
+  transition:transform 500ms;
+}
+.fade-enter-active{
+  opacity:1;
+  transition:transform 500ms;
+}
+.fade-exit{
+  opacity:1;
+  transition:transform 500ms;
+}
+.fade-exit-active{
+  opacity:0;
+  transition:transform 500ms;
+}
+
+
+/**/
+.icon-container{
+  text-align:center;
+  &>svg{
+    height:100%;
+    width:70%;
+  }
+}

@@ -1,5 +1,6 @@
 import app from "firebase/app";
 import "firebase/auth";
+import "firebase/firestore";
 
 const config = {
   apiKey: "AIzaSyAoCq2hQr1ClabiZ1G-yWgvTB9uAacSxr4",
@@ -19,17 +20,18 @@ class Firebase{
       
     }
     this.auth = app.auth();
+    this.db = app.firestore();
   }
   
   getAuth(){
-    return app.auth();
+    return this.auth;
   }
   
   signInWithGoogle(){
     let provider = new app.auth.GoogleAuthProvider();
     
     //Add scopes
-    provider.addScope("https://www.googleapis.com/auth/calendar.readonly");
+    provider.addScope("https://www.googleapis.com/auth/calendar");
     
     return app.auth().signInWithPopup(provider)
   }
@@ -47,11 +49,62 @@ class Firebase{
   }
   
   signOutUser(){
-    return app.auth().signOut().then(function(){
-      console.log("Sign out successful");
-    })
+    return app.auth().signOut();
   }
   
+  addNewSchoolClass(classData){
+    return this.db.collection("classes").add(classData);
+  }
+  
+  getAllSchoolClasses(){
+    return this.db.collection("classes").get().then((querySnapshot) => {
+      let data = [];
+      querySnapshot.forEach((doc) => {
+        data.push({id: doc.id, ...doc.data()});
+      });
+      return data;
+    });
+  }
+  
+  removeSchoolClassItem(docId){
+    return this.db.collection("classes").doc(docId).delete();
+  }
+  
+  addNewSubject(subjectData){
+    return this.db.collection("subjects").add(subjectData);
+  }
+  
+  getAllSubjects(){
+    return this.db.collection("subjects").get().then((querySnapshot) => {
+      let data = [];
+      querySnapshot.forEach((doc) => {
+        data.push({id: doc.id, ...doc.data()});
+      });
+      return data;
+    });
+  }
+  
+  removeSubject(docId){
+    return this.db.collection("subjects").doc(docId).delete();
+  }
+  
+  addNewTeacher(teacherData){
+    return this.db.collection("teachers").add(teacherData);
+  }
+  
+  getAllTeachers(){
+    return this.db.collection("teachers").get().then((querySnapshot) => {
+      let data = [];
+      querySnapshot.forEach((doc) => {
+        data.push({id: doc.id, ...doc.data()});
+      });
+      return data;
+    });
+  }
+  
+  removeTeacher(docId){
+    return this.db.collection("teachers").doc(docId).delete();
+  }
 }
 
 export default Firebase;

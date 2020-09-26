@@ -15,7 +15,7 @@ justify-content:space-between;
 export const SideLink = styled(NavLink)`
 height:50px;
 width:50px;
-margin:5px;
+margin:10px 5px;
 display:block;
 line-height:40px;
 text-align:center;

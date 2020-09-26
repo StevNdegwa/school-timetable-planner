@@ -77,7 +77,7 @@ export default function Signup({setSuccessful, setLoading,setError}){
         return(
           <Form>
             <UserInput type="text" name="name" placeholder="User full name"/>
-            <UserInput type="email" name="name" placeholder="User email"/>
+            <UserInput type="email" name="email" placeholder="User email"/>
             <UserInput type="password" name="password" placeholder="Password" autoComplete="new-password"/>
             <UserInput type="password" name="confirmPassword" placeholder="Confirm Password" autoComplete="new-password"/>
             <Submit type="submit" disabled={isSubmitting} className="primary">

@@ -121,3 +121,34 @@ min-width:100px;
 margin:auto;
 display:block;
 `;
+
+export const CheckBox = styled(Input)`
+position:relative;
+border:none;
+&>input{
+  width:40px;
+  position:absolute;
+  top:0;
+  left:0;
+}
+&>span{
+  position:absolute;
+  top:0;
+  left:40px;
+  line-height:40px;
+  font-weight:600;
+}
+&>div.icon{
+  width:40px;
+  height:100%;
+  position:absolute;
+  top:0;
+  left:0;
+  text-align:center;
+  & > svg.timetable-icons{
+    height:100%;
+    background-color:white;
+    width:20px;
+  }
+}
+`;

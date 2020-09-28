@@ -1,20 +1,33 @@
 import React from "react";
 import PropTypes from "prop-types";
 import HomeCalendar from "./HomeCalendar";
+import DailySchedule from "./DailySchedule";
 import {Wrapper, Status} from "./styles";
 
-export default function Home({selectedDate, selectDate}){
+export default function Home(props){
+  const date = new Date(props.selectedDate);
   return (
     <Wrapper>
       <Status>
-        {new Date(selectedDate).toDateString()}
+        {date.toDateString()}
       </Status>
-      <HomeCalendar selectedDate={selectedDate} selectDate={selectDate}/>
+      <HomeCalendar selectedDate={date} selectDate={props.selectDate}/>
+      <DailySchedule 
+        selectedDate={date} 
+        schedulesList={props.schedulesList} 
+        user={props.user}
+        classesList={props.classesList}
+        subjectsList={props.subjectsList}
+      />
     </Wrapper>
   );
 }
 
 Home.propTypes = {
   selectedDate:PropTypes.string.isRequired,
-  selectDate:PropTypes.func.isRequired
+  selectDate:PropTypes.func.isRequired,
+  schedulesList:PropTypes.object.isRequired,
+  user:PropTypes.object.isRequired,
+  subjectsList:PropTypes.array.isRequired,
+  classesList:PropTypes.array.isRequired
 }

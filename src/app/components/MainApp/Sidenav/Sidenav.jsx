@@ -9,10 +9,8 @@ export default function Sidenav({openLogOutDialog, user}){
     <div>
       <SideLink to="/home" activeClassName="selected"><MdHome/></SideLink>
       <SideLink to="/schedule" activeClassName="selected"><MdEventNote/></SideLink>
-      <SideLink to="/settings" activeClassName="selected"><MdSettings/></SideLink>
-      {user.isAdmin && 
-        <SideLink to="/admin" activeClassName="selected"><MdSupervisorAccount/></SideLink>
-      }
+      {!user.isAdmin && <SideLink to="/settings" activeClassName="selected"><MdSettings/></SideLink>}
+      {user.isAdmin && <SideLink to="/admin" activeClassName="selected"><MdSupervisorAccount/></SideLink>}
     </div>
     <Exit onClick={()=>openLogOutDialog()}><MdSettingsPower/></Exit>
   </Wrapper>)

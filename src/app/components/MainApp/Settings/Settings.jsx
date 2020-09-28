@@ -1,16 +1,17 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {MdPlayArrow} from "react-icons/md";
 
 import Account from "./Account";
 import {Wrapper, Tabs, Content} from "./styles";
 
-export default function Settings(){
+export default function Settings({user}){
   const [tab, setTab] = React.useState("account");
   
   function tabContent(){
     switch(tab){
       case "account":
-        return <Account/>
+        return <Account user={user}/>
       case "appearance":
         return <div>Appearance</div>
       case "privacyNSecurity":
@@ -41,4 +42,8 @@ export default function Settings(){
       {tabContent()}
     </Content>
   </Wrapper>)
+}
+
+Settings.propTypes = {
+  user:PropTypes.object.isRequired
 }

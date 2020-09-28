@@ -8,8 +8,18 @@ grid-template-columns:50% 50%;
 grid-template-rows:60px calc(100% - 60px);
 grid-template-areas:
   'status status'
-  'calendar assignments'
-`;
+  'calendar assignments';
+overflow:auto;
+@media only screen and (max-width:900px){
+grid-template-columns:100%;
+grid-template-rows:60px auto auto;
+grid-template-areas:
+  'status'
+  'calendar'
+  'assignments';  
+}
+`
+;
 
 export const Status = styled.div`
 grid-area:status;

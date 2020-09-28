@@ -46,7 +46,7 @@ class Classes extends React.Component{
         add={this.addClass}
         remove={this.deleteClass}
         loading={loading}
-        head={["Class Code", "Class Name"]}
+        head={["Code", "Name"]}
       />
     </Wrapper>
     );

@@ -2,11 +2,11 @@ import React, {useState, useContext} from "react";
 import PropTypes from "prop-types";
 import {MdPlayArrow, MdAdd, MdRemove} from "react-icons/md";
 
+import ActionButton from "../../ActionButton";
 import AddScheduleDialog from "../AddScheduleDialog";
 import {Wrapper, Control, Content, Table, Row, Cell, Status, Loader} from "./styles";
 
 import FirebaseContext from "../../../../FirebaseContext";
-
 
 let mounted = false;
 
@@ -85,8 +85,8 @@ export default function Tab({schoolClass, day, classesList, subjectsList, teache
       record:{
         start:{value:"06:00", label:"06:00"},
         end:{value:"06:00", label:"06:00"}, 
-        subject:{value:"C001", label:"Mathematics"}, 
-        teacher:{value:"T001", label:"Mr. Ngugi"}
+        subject:{value:"", label:""}, 
+        teacher:{value:"", label:""}
       }
     }
     const [newRecord, setNewRecord] = useState({...def});
@@ -125,7 +125,7 @@ export default function Tab({schoolClass, day, classesList, subjectsList, teache
         <Table>
           <Row className="heading">
             <Cell className="edit">
-              <button onClick={handleAddClick}><MdAdd/></button>
+              <ActionButton onClick={handleAddClick}><MdAdd/></ActionButton>
             </Cell>
             <Cell>Time</Cell>
             <Cell>Subject</Cell>
@@ -137,7 +137,7 @@ export default function Tab({schoolClass, day, classesList, subjectsList, teache
             return (
               <Row key={record.id}>
                 <Cell className="edit">
-                  <button onClick={()=>deleteRecord(record.id)}><MdRemove/></button>
+                  <ActionButton onClick={()=>deleteRecord(record.id)}><MdRemove/></ActionButton>
                 </Cell>
                 <Cell>{`${record.start} - ${record.end}`}</Cell>
                 <Cell>{subject.name}</Cell>
@@ -149,7 +149,7 @@ export default function Tab({schoolClass, day, classesList, subjectsList, teache
           {newRecord.active && 
             <Row>
               <Cell className="edit">
-                <button><MdRemove/></button>
+                <ActionButton><MdRemove/></ActionButton>
               </Cell>
               <Cell>{`${newRecord.record.start.label} - ${newRecord.record.end.label}`}</Cell>
               <Cell>{newRecord.record.subject.label}</Cell>

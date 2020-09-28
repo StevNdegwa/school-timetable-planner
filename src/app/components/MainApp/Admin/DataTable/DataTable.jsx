@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import {MdAdd, MdRemove} from "react-icons/md";
 
+import ActionButton from "../../ActionButton";
 import AddRowDialog from "./AddRowDialog";
 import {TextInput} from "../../../Inputs";
 import {Wrapper,Status, Loader, Table, Row, Cell} from "./styles";
@@ -69,7 +70,7 @@ export default function DataTable({data, add, remove, loading, head}){
     <Table>
       <Row className="heading">
         <Cell className="edit">
-          <button onClick={handleAddClick}><MdAdd/></button>
+          <ActionButton onClick={handleAddClick}><MdAdd/></ActionButton>
         </Cell>
         <Cell>{head[0]}</Cell>
         <Cell>{head[1]}</Cell>
@@ -77,7 +78,7 @@ export default function DataTable({data, add, remove, loading, head}){
       {data.map((row)=>(
         <Row key={row.id}>
           <Cell className="edit">
-            <button onClick={()=>remove(row.id)}><MdRemove/></button>
+            <ActionButton onClick={()=>remove(row.id)}><MdRemove/></ActionButton>
           </Cell>
           <Cell>{row.code}</Cell>
           <Cell>{row.name}</Cell>
@@ -86,7 +87,7 @@ export default function DataTable({data, add, remove, loading, head}){
       {newRecord.active && 
         <Row>
           <Cell className="edit">
-            <button><MdRemove/></button>
+            <ActionButton><MdRemove/></ActionButton>
           </Cell>
           <Cell>{newRecord.record.code}</Cell>
           <Cell>{newRecord.record.name}</Cell>

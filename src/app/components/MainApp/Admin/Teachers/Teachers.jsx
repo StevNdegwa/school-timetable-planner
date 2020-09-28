@@ -46,7 +46,7 @@ class Teachers extends React.Component{
         add={this.addTeacher}
         remove={this.deleteTeacher}
         loading={loading}
-        head={["Email Address", "Teacher name"]}
+        head={["Email", "Name"]}
       />
     </Wrapper>
     );

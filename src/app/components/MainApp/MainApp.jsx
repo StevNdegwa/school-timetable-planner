@@ -5,7 +5,7 @@ import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom
 import Sidenav from "./Sidenav";
 import ConfirmExit from "./ConfirmExit";
 import UserProfile from "./UserProfile";
-import Home from "./Home";
+import HomeView from "../../containers/MainApp_HomeView";
 import Settings from "./Settings";
 import AdminView from "../../containers/MainApp_AdminView";
 import ScheduleView from "../../containers/MainApp_ScheduleView";
@@ -17,7 +17,7 @@ import FirebaseContext from "../../FirebaseContext";
 
 export default function MainApp(props){
   const [currentUser] = useCurrentUser();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   
   const [logOutDialog, userIsLoggedOut, openLogOutDialog, closeLogOutDialog, logOut] = useAppLogOut();
   
@@ -94,13 +94,17 @@ export default function MainApp(props){
         <ConfirmExit visible={logOutDialog} closeLogOutDialog={closeLogOutDialog} logOut={logOut}/>
         <Switch>
           <Route path="/home" exact>
-            <Home selectedDate={props.selectedDate} selectDate={props.selectDate}/>
+            <HomeView 
+              selectedDate={props.selectedDate} 
+              selectDate={props.selectDate} 
+              user={currentUser}
+            />
           </Route>
           <Route path="/schedule" exact>
             <ScheduleView/>
           </Route>
           <Route path="/settings" exact>
-            <Settings/>
+            <Settings user={currentUser}/>
           </Route>
           <Route path="/admin" exact>
             <AdminView/>

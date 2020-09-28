@@ -5,7 +5,6 @@ width:100%;
 height:50px;
 display:flex;
 border:1px solid #bdbdbd;
-line-height:50px;
 padding:0 0.5em;
 margin-bottom:10px;
 &>div{
@@ -13,6 +12,7 @@ margin-bottom:10px;
   width:100px;
   font-weight:600;
   color:#616161;
+  line-height:50px;
 }
 &>input{
   width:100%;

@@ -10,8 +10,8 @@ export default function HomeCalendar({selectDate, selectedDate}){
   
   return (<Wrapper>
     <Calendar
-      onChange={(d)=>selectDate(d)}
-      value={new Date(selectedDate)}
+      onChange={(d)=>selectDate(d.toString())}
+      value={selectedDate}
       className="home-calendar"
       nextLabel={<MdNavigateNext/>}
       next2Label={<MdLastPage/>}
@@ -23,5 +23,5 @@ export default function HomeCalendar({selectDate, selectedDate}){
 
 HomeCalendar.propTypes = {
   selectDate:PropTypes.func.isRequired,
-  selectedDate:PropTypes.string.isRequired
+  selectedDate:PropTypes.instanceOf(Date).isRequired
 }

@@ -1,21 +1,20 @@
 import app from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
-
-const config = {
-  apiKey: "AIzaSyAoCq2hQr1ClabiZ1G-yWgvTB9uAacSxr4",
-  authDomain: "school-timetable-planner.firebaseapp.com",
-  databaseURL: "https://school-timetable-planner.firebaseio.com",
-  projectId: "school-timetable-planner",
-  storageBucket: "school-timetable-planner.appspot.com",
-  messagingSenderId: "574072331317",
-  appId: "1:574072331317:web:458ad67d3953bcbcc6657c"
-};
+import config from "./config.json";
 
 class Firebase{
   constructor(){
     try{
-      app.initializeApp(config);
+      app.initializeApp({
+        apiKey: config.API_KEY,
+        authDomain: config.AUTH_DOMAIN,
+        databaseURL: config.DATABASE_URL,
+        projectId: config.PROJECT_ID,
+        storageBucket: config.STORAGE_BUCKET,
+        messagingSenderId: config.MESSAGING_SENDER_ID,
+        appId: config.APP_ID
+      });
     }catch(error){
       
     }
@@ -32,6 +31,7 @@ class Firebase{
     
     //Add scopes
     provider.addScope("https://www.googleapis.com/auth/calendar");
+    provider.addScope("https://www.googleapis.com/auth/calendar.events");
     
     return app.auth().signInWithPopup(provider)
   }
@@ -105,6 +105,25 @@ class Firebase{
   removeTeacher(docId){
     return this.db.collection("teachers").doc(docId).delete();
   }
+  
+  addNewSchedule(scheduleData){
+    return this.db.collection("schedules").add(scheduleData);
+  }
+  
+  getAllSchedules(){
+    return this.db.collection("schedules").get().then((querySnapshot) => {
+      let data = [];
+      querySnapshot.forEach((doc) => {
+        data.push({id: doc.id, ...doc.data()});
+      });
+      return data;
+    });
+  }
+  
+  removeSchedule(docId){
+    return this.db.collection("schedules").doc(docId).delete();
+  }
+  
 }
 
 export default Firebase;

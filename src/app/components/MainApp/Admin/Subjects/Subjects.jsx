@@ -47,6 +47,7 @@ class Subjects extends React.Component{
         add={this.addSubject}
         remove={this.deleteSubject}
         loading={loading}
+        head={["Subject Code", "Subject name"]}
       />
     </Wrapper>
     );

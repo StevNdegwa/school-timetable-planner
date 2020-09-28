@@ -5,7 +5,7 @@ import {IconContext} from "react-icons";
 import AuthView from "./containers/AuthView";
 import MainAppView from "./containers/MainAppView";
 import FirebaseContext from "./FirebaseContext";
-import Firebase from "./Firebase";
+import Firebase from "./helpers/Firebase";
 import {configureStore} from "@reduxjs/toolkit";
 import {Provider} from "react-redux";
 import reducer from "./features/reducer";

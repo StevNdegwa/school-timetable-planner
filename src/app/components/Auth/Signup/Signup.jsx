@@ -17,7 +17,13 @@ export default function Signup({setSuccessful, setLoading,setError}){
       await firebaseContext.signInWithGoogle();
       setSuccessful(true);
     }catch(error){
-      console.log(error);
+      switch(error.code){
+        case "auth/popup-closed-by-user":
+          setError("An error occured. Please try again");
+          break;
+        default:
+          setError("User signup failed")
+      }
       setError("User signup failed");
     }
   }
@@ -66,9 +72,14 @@ export default function Signup({setSuccessful, setLoading,setError}){
             setSubmitting(false);
             setSuccessful(true);
           }catch(error){
-            console.log(error);
+            switch(error.code){
+              case "auth/email-already-in-use":
+                setError("An User by that email exists");
+                break;
+              default:
+                setError("User signup failed")
+            }
             setSubmitting(false);
-            setError("User signup failed")
           }
         }
       }

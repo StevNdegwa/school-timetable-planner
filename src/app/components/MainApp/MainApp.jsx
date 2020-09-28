@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useCallback} from "react";
 import PropTypes from "prop-types";
 import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
 
@@ -8,40 +8,79 @@ import UserProfile from "./UserProfile";
 import Home from "./Home";
 import Settings from "./Settings";
 import AdminView from "../../containers/MainApp_AdminView";
-import Schedule from "./Schedule";
+import ScheduleView from "../../containers/MainApp_ScheduleView";
 import {Wrapper, Header, Main, AppLoader, Spinner} from "./styles";
+
+import GoogleCalendar from "../../helpers/GoogleCalendar";
 
 import FirebaseContext from "../../FirebaseContext";
 
 export default function MainApp(props){
+  const [currentUser] = useCurrentUser();
   const [loading, setLoading] = useState(true);
-  const [confirmExit, setConfirmExit] = useState({confirmed:false, dialog:false})
+  
+  const [logOutDialog, userIsLoggedOut, openLogOutDialog, closeLogOutDialog, logOut] = useAppLogOut();
+  
   const firebaseContext = React.useContext(FirebaseContext);
   
-  async function loadApplicationData(){
+  // eslint-disable-next-line
+  const loadCalendar = useCallback(()=>{
+    if(currentUser.isAdmin){
+      return GoogleCalendar.load()
+    }else{
+      return Promise.resolve()
+    }
+  }, [currentUser])
+  
+  const loadApplicationData = useCallback(async ()=>{
     try{  
-      let [classes, subjects, teachers] = await Promise.all([
+      let [classes, subjects, teachers, schedules] = await Promise.all([
         firebaseContext.getAllSchoolClasses(),
         firebaseContext.getAllSubjects(),
-        firebaseContext.getAllTeachers()
+        firebaseContext.getAllTeachers(),
+        firebaseContext.getAllSchedules()
+        //loadCalendar()
       ]);
       
       props.setClassesList(classes);
       props.setSubjectsList(subjects);
       props.setTeachersList(teachers);
+      props.setScheduleLists(schedules);
+      
+      //GoogleCalendar.testCalendar()
     }catch(error){
       console.log(error);
     }
     setLoading(false);
-  }
+  // eslint-disable-next-line  
+  }, [])
   
   useEffect(()=>{
     loadApplicationData();
-    // eslint-disable-next-line
-  }, []);
+  }, [loadApplicationData]);
   
-  if(confirmExit.confirmed || !props.currentUser){
+  if(userIsLoggedOut || !currentUser.isSet){
     return (<Redirect to="/"/>);
+  }
+  
+  function useCurrentUser(){
+    const [user] = useState(props.currentUser);
+    
+    const currentUserSet = Boolean(user);
+    const isAdmin = Boolean(user && user.email === "admin@timetableplanner.edu");
+    
+    return [{...user, isSet:currentUserSet, isAdmin}];
+  }
+  
+  function useAppLogOut(){
+    const [exit, setExit] = useState({dialog:false, confirmed:false});
+    
+    const openDialog = ()=>setExit({dialog:true, confirmed:false});
+    const closeDialog = ()=>setExit({dialog:false, confirmed:false});
+    const logOut = ()=>setExit({dialog:false, confirmed:true});
+    const isLoggedOut = exit.confirmed;
+    
+    return [exit.dialog, isLoggedOut, openDialog, closeDialog, logOut];
   }
   
   return (<Wrapper>
@@ -51,14 +90,14 @@ export default function MainApp(props){
     </Header>
     <Main>
       <Router basename="/app">
-        <Sidenav exitApp={()=>setConfirmExit((s)=>({...s, dialog:true}))} user={props.currentUser}/>
-        <ConfirmExit visible={confirmExit.dialog} close={setConfirmExit}/>
+        <Sidenav openLogOutDialog={openLogOutDialog} user={currentUser}/>
+        <ConfirmExit visible={logOutDialog} closeLogOutDialog={closeLogOutDialog} logOut={logOut}/>
         <Switch>
           <Route path="/home" exact>
             <Home selectedDate={props.selectedDate} selectDate={props.selectDate}/>
           </Route>
           <Route path="/schedule" exact>
-            <Schedule/>
+            <ScheduleView/>
           </Route>
           <Route path="/settings" exact>
             <Settings/>
@@ -83,8 +122,9 @@ export default function MainApp(props){
 MainApp.propTypes = {
   selectedDate:PropTypes.string.isRequired,
   selectDate:PropTypes.func.isRequired,
-  currentUser:PropTypes.object.isRequired,
+  currentUser:PropTypes.object,
   setClassesList:PropTypes.func.isRequired,
   setSubjectsList:PropTypes.func.isRequired,
-  setTeachersList:PropTypes.func.isRequired
+  setTeachersList:PropTypes.func.isRequired,
+  setScheduleLists:PropTypes.func.isRequired
 }

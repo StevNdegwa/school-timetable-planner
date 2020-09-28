@@ -53,7 +53,7 @@ class Admin extends React.Component{
           <div>Classes</div><div><MdPlayArrow/></div>
         </div>
         <div onClick={()=>this.setState({tab:"subjects"})}>
-          <div>Lessons</div><div><MdPlayArrow/></div>
+          <div>Subjects</div><div><MdPlayArrow/></div>
         </div>
         <div onClick={()=>this.setState({tab:"teachers"})}>
           <div>Teachers</div><div><MdPlayArrow/></div>

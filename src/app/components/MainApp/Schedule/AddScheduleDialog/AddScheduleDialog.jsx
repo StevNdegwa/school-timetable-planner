@@ -6,10 +6,10 @@ import Select from "../../../Select";
 import Modal, {Header, Main, Footer} from "../../../Modal";
 import {Wrapper, Section} from "./styles";
 
-export default function NewRecordDialog({currentOptions, visible, cancel, editFields, save, classTitle}){
+export default function NewRecordDialog({currentOptions, visible, cancel, editFields, save, classTitle, subjectsList, teachersList, day}){
   
-  function selectLessonOption(option){
-    editFields("lesson", option)
+  function selectSubjectOption(option){
+    editFields("subject", option)
   }
   
   function selectTeacherOption(option){
@@ -33,24 +33,24 @@ export default function NewRecordDialog({currentOptions, visible, cancel, editFi
         </Header>
         <Main>
           <Section>
-            <b>{classTitle}</b>
+            <b>{classTitle}, {day.label}</b>
           </Section>
           <Section>
             <Select 
               options = {[
-                {value:"6",label:"06:00"},
-                {value:"6",label:"07:00"},
-                {value:"8",label:"08:00"},
-                {value:"9",label:"09:00"},
-                {value:"10",label:"10:00"},
-                {value:"11",label:"11:00"},
-                {value:"12",label:"12:00"},
-                {value:"13",label:"13:00"},
-                {value:"14",label:"14:00"},
-                {value:"15",label:"15:00"},
-                {value:"16",label:"16:00"},
-                {value:"17",label:"17:00"},
-                {value:"18",label:"18:00"}
+                {value:"06:00",label:"06:00"},
+                {value:"07:00",label:"07:00"},
+                {value:"08:00",label:"08:00"},
+                {value:"09:00",label:"09:00"},
+                {value:"10:00",label:"10:00"},
+                {value:"11:00",label:"11:00"},
+                {value:"12:00",label:"12:00"},
+                {value:"13:00",label:"13:00"},
+                {value:"14:00",label:"14:00"},
+                {value:"15:00",label:"15:00"},
+                {value:"16:00",label:"16:00"},
+                {value:"17:00",label:"17:00"},
+                {value:"18:00",label:"18:00"}
               ]}
               label="Start Time"
               info="Starting time"
@@ -61,19 +61,19 @@ export default function NewRecordDialog({currentOptions, visible, cancel, editFi
           <Section>
             <Select 
               options = {[
-                {value:"6",label:"06:00"},
-                {value:"6",label:"07:00"},
-                {value:"8",label:"08:00"},
-                {value:"9",label:"09:00"},
-                {value:"10",label:"10:00"},
-                {value:"11",label:"11:00"},
-                {value:"12",label:"12:00"},
-                {value:"13",label:"13:00"},
-                {value:"14",label:"14:00"},
-                {value:"15",label:"15:00"},
-                {value:"16",label:"16:00"},
-                {value:"17",label:"17:00"},
-                {value:"18",label:"18:00"}
+                {value:"06:00",label:"06:00"},
+                {value:"07:00",label:"07:00"},
+                {value:"08:00",label:"08:00"},
+                {value:"09:00",label:"09:00"},
+                {value:"10:00",label:"10:00"},
+                {value:"11:00",label:"11:00"},
+                {value:"12:00",label:"12:00"},
+                {value:"13:00",label:"13:00"},
+                {value:"14:00",label:"14:00"},
+                {value:"15:00",label:"15:00"},
+                {value:"16:00",label:"16:00"},
+                {value:"17:00",label:"17:00"},
+                {value:"18:00",label:"18:00"}
               ]}
               label="End Time"
               info="Ending time"
@@ -83,28 +83,18 @@ export default function NewRecordDialog({currentOptions, visible, cancel, editFi
           </Section>
           <Section>
             <Select 
-              options = {[
-                {value:"math",label:"Mathematics"},
-                {value:"eng",label:"English"},
-                {value:"hist",label:"History"},
-                {value:"bio",label:"Biology"}
-              ]}
-              label="Lesson"
-              info="School lessons"
-              currentOption={currentOptions.lesson}
-              selectOption={selectLessonOption}
+              options = {subjectsList.map((l)=>({value:l.code, label:l.name}))}
+              label="Subject"
+              info="Subjects taught in the school"
+              currentOption={currentOptions.subject}
+              selectOption={selectSubjectOption}
             />
           </Section>
           <Section>
             <Select 
-              options = {[
-                {value:"5463774",label:"Mr. Chege"},
-                {value:"6975793",label:"Mrs. Mburu"},
-                {value:"3415233",label:"Mr. Ngugi"},
-                {value:"1110283",label:"Madam Doreen"}
-              ]}
+              options = {teachersList.map((l)=>({value:l.code, label:l.name}))}
               label="Teacher"
-              info="School teachers"
+              info="Teacher teaching in the school"
               currentOption={currentOptions.teacher}
               selectOption={selectTeacherOption}
             />
@@ -128,5 +118,8 @@ NewRecordDialog.propTypes = {
   cancel:PropTypes.func.isRequired,
   currentOptions:PropTypes.object.isRequired,
   save:PropTypes.func.isRequired,
-  classTitle:PropTypes.string.isRequired
+  classTitle:PropTypes.string.isRequired,
+  subjectsList:PropTypes.array.isRequired,
+  teachersList:PropTypes.array.isRequired,
+  day:PropTypes.object
 }

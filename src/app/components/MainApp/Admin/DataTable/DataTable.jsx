@@ -6,7 +6,7 @@ import AddRowDialog from "./AddRowDialog";
 import {TextInput} from "../../../Inputs";
 import {Wrapper,Status, Loader, Table, Row, Cell} from "./styles";
 
-export default function DataTable({data, add, remove, loading}){
+export default function DataTable({data, add, remove, loading, head}){
   const [addDialog, openAddDialog, closeAddDialog] = useAddDialog();
   const [newRecord, startEditing, stopEditing, editField] = useAddRecord();
   
@@ -63,16 +63,16 @@ export default function DataTable({data, add, remove, loading}){
       cancel={handleCancelClick}
       save={handleSaveNewRow}
     >
-      <TextInput label="Code" onChange={handleCodeChange}/>
-      <TextInput label="Name" onChange={handleNameChange}/>
+      <TextInput label={head[0]} onChange={handleCodeChange}/>
+      <TextInput label={head[1]} onChange={handleNameChange}/>
     </AddRowDialog>
     <Table>
       <Row className="heading">
         <Cell className="edit">
           <button onClick={handleAddClick}><MdAdd/></button>
         </Cell>
-        <Cell>Code</Cell>
-        <Cell>Name</Cell>
+        <Cell>{head[0]}</Cell>
+        <Cell>{head[1]}</Cell>
       </Row>
       {data.map((row)=>(
         <Row key={row.id}>
@@ -104,5 +104,6 @@ DataTable.propTypes = {
   })),
   add:PropTypes.func.isRequired,
   remove:PropTypes.func.isRequired,
-  loading:PropTypes.bool
+  loading:PropTypes.bool,
+  head:PropTypes.arrayOf(PropTypes.string)
 }

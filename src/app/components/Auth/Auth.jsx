@@ -19,7 +19,6 @@ export default function Auth({setCurrentUser, currentUser}){
   React.useEffect(()=>{
     firebaseContext.getAuth().onAuthStateChanged((user)=>{
       if(user){
-        console.log(user);
         let {displayName, email, photoURL, uid} = user;
         setCurrentUser({displayName, email, photoURL, uid});
       }

@@ -34,12 +34,12 @@ export default function MainApp(props){
   
   const loadApplicationData = useCallback(async ()=>{
     try{  
-      let [classes, subjects, teachers, schedules] = await Promise.all([
+      let [classes, subjects, teachers, schedules, gapi] = await Promise.all([
         firebaseContext.getAllSchoolClasses(),
         firebaseContext.getAllSubjects(),
         firebaseContext.getAllTeachers(),
-        firebaseContext.getAllSchedules()
-        //loadCalendar()
+        firebaseContext.getAllSchedules(),
+        loadCalendar()
       ]);
       
       props.setClassesList(classes);
@@ -47,7 +47,6 @@ export default function MainApp(props){
       props.setTeachersList(teachers);
       props.setScheduleLists(schedules);
       
-      //GoogleCalendar.testCalendar()
     }catch(error){
       console.log(error);
     }

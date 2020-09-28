@@ -7,6 +7,7 @@ import AddScheduleDialog from "../AddScheduleDialog";
 import {Wrapper, Control, Content, Table, Row, Cell, Status, Loader} from "./styles";
 
 import FirebaseContext from "../../../../FirebaseContext";
+import GoogleCalendar from "../../../../helpers/GoogleCalendar";
 
 let mounted = false;
 
@@ -30,6 +31,20 @@ export default function Tab({schoolClass, day, classesList, subjectsList, teache
     openAddDialog();
   }
   
+  function addCalendarEvent(eventData, description, email){
+    
+    if(/^[A-Z0-9._%+-]+@gmail\.com$/i.test(email)){
+      
+      return GoogleCalendar.sendEventToCalendar(eventData, description, email)
+    
+    }else{
+      
+      return Promise.resolve();
+    
+    }
+    
+  }
+  
   async function saveNewRecord(){
     try{
       closeAddDialog();
@@ -40,9 +55,11 @@ export default function Tab({schoolClass, day, classesList, subjectsList, teache
       
       let schedule = {class:schoolClass.code, subject:subject.value, teacher:teacher.value, start:start.value, end:end.value, day:day.value};
       
-      let doc = await firebaseContext.addNewSchedule(schedule);
+      let [doc, calendarEvent] = await firebaseContext.addNewSchedule(schedule);
       
       addNewSchedule(day.value, {id:doc.id, ...schedule});
+      
+      addCalendarEvent(schedule, "School Lesson", teacher.value)
       
       if(mounted) stopEditing();
       
@@ -50,7 +67,7 @@ export default function Tab({schoolClass, day, classesList, subjectsList, teache
       console.log(error);
     }
     
-    setLoading(false);
+    if(mounted) setLoading(false);
   }
   
   async function deleteRecord(id){

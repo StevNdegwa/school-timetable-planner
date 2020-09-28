@@ -1,4 +1,5 @@
 import config from "./config.json";
+import {DateTime} from "luxon";
 
 class GoogleCalendar{
   static load(){
@@ -18,48 +19,65 @@ class GoogleCalendar{
     })
   }
   
-  static testCalendar(){
-    var event = {
-      'summary': 'Google I/O 2015',
-      'location': '800 Howard St., San Francisco, CA 94103',
-      'description': 'A chance to hear more about Google\'s developer products.',
-      'start': {
-        'dateTime': '2020-09-27T09:00:00-07:00',
-        'timeZone': 'America/Los_Angeles'
-      },
-      'end': {
-        'dateTime': '2020-09-27T17:00:00-07:00',
-        'timeZone': 'America/Los_Angeles'
-      },
-      'recurrence': [
-        'RRULE:FREQ=DAILY;COUNT=2'
-      ],
-      'attendees': [
-        {'email': 'lpage@example.com'},
-        {'email': 'sbrin@example.com'}
-      ],
-      'reminders': {
-        'useDefault': false,
-        'overrides': [
-          {'method': 'email', 'minutes': 24 * 60},
-          {'method': 'popup', 'minutes': 10}
-        ]
-      }
-    };
-
-    var request = window.gapi.client.calendar.events.insert({
-      'calendarId': 'stevenndegwa4@gmail.com',
-      'resource': event
-    });
-
-    request.execute(function(event) {
-      console.log(event)
-    });
-
+  static getStartEndDates(start, end, day){
+    let days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
+    
+    let date = DateTime.local().setZone('Africa/Nairobi'),
+      diff = days.findIndex((d)=>(d === day)) - date.weekday;
+    
+    if(diff > 0){//Move to the day in this week
+      date = date.plus({days:diff}).set({minute:0, second:0, millisecond:0});
+    }else{//Move to next week
+      date = date.plus({days:(7 + diff)}).set({minute:0, second:0, millisecond:0});
+    }
+    
+    let startDate = date.set({hour:parseInt(start)}),
+      endDate = date.set({hour:parseInt(end)});
+    
+    return [startDate, endDate];
   }
   
-  addLesson(email, start, end){
+  static sendEventToCalendar(eventData, description, email){
     
+    return new Promise(function(resolve, reject){
+      
+      let [startDate, endDate] = GoogleCalendar.getStartEndDates(eventData.start, eventData.end, eventData.day);
+      
+      let event = {
+        summary: eventData.subject,
+        location: eventData.class,
+        description: description,
+        start: {
+          dateTime: startDate,
+          timeZone: 'Africa/Nairobi'
+        },
+        end: {
+          dateTime: endDate,
+          timeZone: 'Africa/Nairobi'
+        },
+        recurrence: [
+          'RRULE:FREQ=WEEKLY'
+        ]
+      };
+    
+      let eventPayload = JSON.stringify(event);
+      
+      var request = window.gapi.client.calendar.events.insert({
+        'calendarId': email,
+        'resource': eventPayload
+      });
+
+      request.execute(function(event) {
+        
+        resolve(event);
+      
+      }, function(error){
+        
+        reject(error);
+      
+      });
+    })
+
   }
 }
 

@@ -52,8 +52,7 @@ export default function MainApp(props){
       props.setScheduleLists(schedules);
       
     }catch(error){
-      console.log(error);
-      setError(new Error("Error occured while loading application"));
+      setError(error);
     }
     setLoading(false);
   // eslint-disable-next-line  

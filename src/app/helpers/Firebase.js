@@ -5,15 +5,19 @@ import config from "./config.json";
 
 class Firebase{
   constructor(){
-    app.initializeApp({
-      apiKey: config.API_KEY,
-      authDomain: config.AUTH_DOMAIN,
-      databaseURL: config.DATABASE_URL,
-      projectId: config.PROJECT_ID,
-      storageBucket: config.STORAGE_BUCKET,
-      messagingSenderId: config.MESSAGING_SENDER_ID,
-      appId: config.APP_ID
-    });
+    try{
+      app.initializeApp({
+        apiKey: config.API_KEY,
+        authDomain: config.AUTH_DOMAIN,
+        databaseURL: config.DATABASE_URL,
+        projectId: config.PROJECT_ID,
+        storageBucket: config.STORAGE_BUCKET,
+        messagingSenderId: config.MESSAGING_SENDER_ID,
+        appId: config.APP_ID
+      });
+    }catch(error){
+      
+    }
     this.auth = app.auth();
     this.db = app.firestore();
   }

@@ -12,10 +12,6 @@ export default function Settings({user}){
     switch(tab){
       case "account":
         return <Account user={user}/>
-      case "appearance":
-        return <div>Appearance</div>
-      case "privacyNSecurity":
-        return <div>Privacy & Security</div>
       case "about":
         return <div>About</div>
       default:
@@ -27,12 +23,6 @@ export default function Settings({user}){
     <Tabs>
       <div onClick={()=>setTab("account")}>
         <div>Account</div><div><MdPlayArrow/></div>
-      </div>
-      <div onClick={()=>setTab("appearance")}>
-        <div>Appearance</div><div><MdPlayArrow/></div>
-      </div>
-      <div onClick={()=>setTab("privacyNSecurity")}>
-        <div>Privacy & Security</div><div><MdPlayArrow/></div>
       </div>
       <div onClick={()=>setTab("about")}>
         <div>About</div><div><MdPlayArrow/></div>

@@ -46,24 +46,25 @@ display:flex;
 justify-content:center;
 align-items:center;
 background-color:rgba(69, 90, 100, 0.5);
-&>div{
-  width:200px;
-  height:200px;
-  text-align:center;
-  background-color:white;
-  border:2px outset white;
-  border-radius:5px;
-  display:flex;
-  flex-direction:column;
-  &>div.spinner{
-    height:100%;
-    width:100%
-  }
-  &>div.label{
-    width:100%;
-    height:50px;
-    line-height:50px;
-  }
+`;
+
+export const Status = styled.div`
+width:200px;
+height:200px;
+text-align:center;
+background-color:white;
+border:2px outset white;
+border-radius:5px;
+display:flex;
+flex-direction:column;
+&>div.spinner{
+  height:100%;
+  width:100%
+}
+&>div.label{
+  width:100%;
+  height:50px;
+  line-height:50px;
 }
 `;
 

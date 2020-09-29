@@ -4,6 +4,7 @@ import {IconContext} from "react-icons";
 
 import AuthView from "./containers/AuthView";
 import MainAppView from "./containers/MainAppView";
+import ErrorBoundary from "./components/ErrorBoundary";
 import FirebaseContext from "./FirebaseContext";
 import Firebase from "./helpers/Firebase";
 import {configureStore} from "@reduxjs/toolkit";
@@ -20,10 +21,14 @@ export default function App(){
     <Router>
       <Switch>
         <Route path="/app/home" exact>
-          <MainAppView/>
+          <ErrorBoundary>
+            <MainAppView/>
+          </ErrorBoundary>
         </Route>
         <Route path="/" exact>
-          <AuthView/>
+          <ErrorBoundary>
+            <AuthView/>
+          </ErrorBoundary>
         </Route>
         <Route>
           <div>

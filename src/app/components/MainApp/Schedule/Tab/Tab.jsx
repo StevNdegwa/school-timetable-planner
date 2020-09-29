@@ -55,11 +55,15 @@ export default function Tab({schoolClass, day, classesList, subjectsList, teache
       
       let schedule = {class:schoolClass.code, subject:subject.value, teacher:teacher.value, start:start.value, end:end.value, day:day.value};
       
-      let [doc, calendarEvent] = await firebaseContext.addNewSchedule(schedule);
+      let doc = await firebaseContext.addNewSchedule(schedule);
       
       addNewSchedule(day.value, {id:doc.id, ...schedule});
       
-      addCalendarEvent(schedule, "School Lesson", teacher.value)
+      addCalendarEvent(
+        {class:schoolClass.name, subject:subject.label, start:start.label, end:end.label, day:day.value}, 
+        "School Lesson", 
+        teacher.value
+      )
       
       if(mounted) stopEditing();
       

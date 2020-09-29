@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from "react";
+import React, {useState, useEffect, useCallback, Suspense, lazy} from "react";
 import PropTypes from "prop-types";
 import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
 
@@ -6,18 +6,21 @@ import Sidenav from "./Sidenav";
 import ConfirmExit from "./ConfirmExit";
 import UserProfile from "./UserProfile";
 import HomeView from "../../containers/MainApp_HomeView";
-import Settings from "./Settings";
-import AdminView from "../../containers/MainApp_AdminView";
 import ScheduleView from "../../containers/MainApp_ScheduleView";
-import {Wrapper, Header, Main, AppLoader, Spinner} from "./styles";
+import PageLoader from "./PageLoader";
+import {Wrapper, Header, Main, AppLoader, Status, Spinner} from "./styles";
 
 import GoogleCalendar from "../../helpers/GoogleCalendar";
 
 import FirebaseContext from "../../FirebaseContext";
 
+const Settings = lazy(()=>import("./Settings"));
+const Admin = lazy(()=>import("./../../containers/MainApp_AdminView"));
+
 export default function MainApp(props){
   const [currentUser] = useCurrentUser();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   
   const [logOutDialog, userIsLoggedOut, openLogOutDialog, closeLogOutDialog, logOut] = useAppLogOut();
   
@@ -30,11 +33,12 @@ export default function MainApp(props){
     }else{
       return Promise.resolve()
     }
-  }, [currentUser])
+  }, [currentUser]);
   
-  const loadApplicationData = useCallback(async ()=>{
+  // eslint-disable-next-line
+  async function loadApplicationData(){
     try{  
-      let [classes, subjects, teachers, schedules, gapi] = await Promise.all([
+      let [classes, subjects, teachers, schedules] = await Promise.all([
         firebaseContext.getAllSchoolClasses(),
         firebaseContext.getAllSubjects(),
         firebaseContext.getAllTeachers(),
@@ -48,19 +52,15 @@ export default function MainApp(props){
       props.setScheduleLists(schedules);
       
     }catch(error){
-      console.log(error);
+      setError(new Error("Error occured while loading application"));
     }
     setLoading(false);
   // eslint-disable-next-line  
-  }, [])
+  }
   
   useEffect(()=>{
     loadApplicationData();
   }, [loadApplicationData]);
-  
-  if(userIsLoggedOut || !currentUser.isSet){
-    return (<Redirect to="/"/>);
-  }
   
   function useCurrentUser(){
     const [user] = useState(props.currentUser);
@@ -82,10 +82,18 @@ export default function MainApp(props){
     return [exit.dialog, isLoggedOut, openDialog, closeDialog, logOut];
   }
   
+  if(userIsLoggedOut || !currentUser.isSet){
+    return (<Redirect to="/"/>);
+  }
+  
+  if(!!error){
+    throw error;
+  }
+  
   return (<Wrapper>
     <Header className="level-100">
      <div></div>
-     <div><UserProfile/></div>
+     <div><UserProfile user={currentUser}/></div>
     </Header>
     <Main>
       <Router basename="/app">
@@ -103,20 +111,24 @@ export default function MainApp(props){
             <ScheduleView/>
           </Route>
           <Route path="/settings" exact>
-            <Settings user={currentUser}/>
+            <Suspense fallback={<PageLoader/>}>
+              <Settings user={currentUser}/>
+            </Suspense>
           </Route>
           <Route path="/admin" exact>
-            <AdminView/>
+            <Suspense fallback={<PageLoader/>}>
+              <Admin/>
+            </Suspense>
           </Route>
         </Switch>
       </Router>
     </Main>
     {loading && 
       <AppLoader>
-        <div>
+        <Status>
           <div className="spinner"><Spinner/></div>
           <div className="label">Please Wait...</div>
-        </div>
+        </Status>
       </AppLoader>
    }
   </Wrapper>)

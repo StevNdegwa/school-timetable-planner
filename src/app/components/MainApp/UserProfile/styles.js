@@ -22,20 +22,32 @@ transition:background-color 300ms, box-shadow 400ms;
   background-color:#283593;
   box-shadow:inset 0px 0px 5px #1a237e;
 }
+${({open})=>open&&css`
+background-color:#283593;
+box-shadow:inset 0px 0px 5px #1a237e;
+`}
 &>svg{
   height:100%;
   width:50px;
 }
 `;
 
-export const Content = styled.div`
+export const Content = styled.ul`
 width:200px;
-min-height:50px;
 position:absolute;
 top:100%;
 border:1px solid #bdbdbd;
 box-shadow:0px 0px 5px #bdbdbd;
+background-color:white;
 ${({visible}) => !visible && css`
 display:none !important;
 `}
-`
+&>li{
+  height:40px;
+  line-height:40px;
+  border-bottom:1px inset #bdbdbd;
+  font-weight:600;
+  font-weight:0.9em;
+  textAlign:center;
+}
+`;

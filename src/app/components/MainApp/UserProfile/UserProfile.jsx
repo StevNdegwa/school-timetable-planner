@@ -3,11 +3,8 @@ import {CSSTransition} from "react-transition-group";
 import {MdAccountCircle} from "react-icons/md";
 import {Wrapper, Control, Content} from "./styles";
 
-//import FirebaseContext from "../../../FirebaseContext";
-
-const UserProfile = React.memo(()=>{
+const UserProfile = React.memo(({user})=>{
   const [contentVisible, setContentVisible] = React.useState(false);
-  //const firebaseContext = React.useContext(FirebaseContext);
   
   function handleBodyClick(){
     setContentVisible(false);
@@ -23,10 +20,12 @@ const UserProfile = React.memo(()=>{
   
   return (
     <Wrapper>
-      <Control onClick={()=>setContentVisible((v)=>!v)}><MdAccountCircle/></Control>
+      <Control onClick={()=>setContentVisible((v)=>!v)} open={contentVisible}><MdAccountCircle/></Control>
       <CSSTransition in={contentVisible} timeout={200} classNames="fade">
-        <Content  className="level-300" visible={contentVisible}>
-          
+        <Content className="level-300" visible={contentVisible}>
+          <li>{user.email}</li>
+          <li>{user.displayName}</li>
+          <li></li>
         </Content>
       </CSSTransition>
     </Wrapper>

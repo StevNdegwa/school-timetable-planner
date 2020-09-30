@@ -145,6 +145,7 @@ border:none;
   top:0;
   left:0;
   text-align:center;
+  background-color:white;
   & > svg.timetable-icons{
     height:100%;
     background-color:white;

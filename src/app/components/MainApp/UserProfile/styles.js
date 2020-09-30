@@ -22,7 +22,7 @@ transition:background-color 300ms, box-shadow 400ms;
   background-color:#283593;
   box-shadow:inset 0px 0px 5px #1a237e;
 }
-${({open})=>open&&css`
+${({open})=> open && css`
 background-color:#283593;
 box-shadow:inset 0px 0px 5px #1a237e;
 `}
@@ -33,7 +33,7 @@ box-shadow:inset 0px 0px 5px #1a237e;
 `;
 
 export const Content = styled.ul`
-width:200px;
+width:auto;
 position:absolute;
 top:100%;
 border:1px solid #bdbdbd;
@@ -44,10 +44,12 @@ display:none !important;
 `}
 &>li{
   height:40px;
+  padding:0 1em;
   line-height:40px;
   border-bottom:1px inset #bdbdbd;
   font-weight:600;
   font-weight:0.9em;
-  textAlign:center;
+  text-align:center;
+  white-space:nowrap;
 }
 `;

@@ -96,6 +96,7 @@ text-align:center;
 }
 &.edit{
   width:50px;
+  height:50px;
   &>button{
     display:inline-block;
     width:100%;

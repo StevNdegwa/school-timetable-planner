@@ -13,13 +13,11 @@ export default function Schedule({classesList, subjectsList, teachersList, addNe
       <div className="day filter">
         <Select 
           options = {[
-            {value:"sunday",label:"Sunday"},
             {value:"monday",label:"Monday"},
             {value:"tuesday",label:"Tuesday"},
             {value:"wednesday",label:"Wednesday"},
             {value:"thursday",label:"Thursday"},
-            {value:"friday",label:"Friday"},
-            {value:"saturday",label:"Saturday"}
+            {value:"friday",label:"Friday"}
           ]}
           label="Day of the week"
           info="Filter schedule by day of week"

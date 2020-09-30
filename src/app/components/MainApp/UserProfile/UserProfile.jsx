@@ -23,8 +23,8 @@ const UserProfile = React.memo(({user})=>{
       <Control onClick={()=>setContentVisible((v)=>!v)} open={contentVisible}><MdAccountCircle/></Control>
       <CSSTransition in={contentVisible} timeout={200} classNames="fade">
         <Content className="level-300" visible={contentVisible}>
-          <li>{user.email}</li>
           <li>{user.displayName}</li>
+          <li>{user.email}</li>
           <li></li>
         </Content>
       </CSSTransition>

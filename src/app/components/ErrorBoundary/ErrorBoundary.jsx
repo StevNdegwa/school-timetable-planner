@@ -28,7 +28,7 @@ class ErrorBoundary extends React.Component{
       return (<Wrapper>
         <Info>
           <div>{error}</div>
-          <div><a href="/" alt="Homepage"><button>Go to home</button></a></div>
+          <div><a href="/" alt="Homepage"><button className="primary">Exit Application</button></a></div>
         </Info>
       </Wrapper>);
     }else{

@@ -28,7 +28,7 @@ export default function MainApp(props){
   
   // eslint-disable-next-line
   const loadCalendar = useCallback(()=>{
-    if(currentUser.isAdmin){
+    if(currentUser.isGoogleAccount){
       return GoogleCalendar.load()
     }else{
       return Promise.resolve()
@@ -67,8 +67,9 @@ export default function MainApp(props){
     
     const currentUserSet = Boolean(user);
     const isAdmin = Boolean(user && user.email === "admin@timetableplanner.edu");
+    const isGoogleAccount = Boolean(user && user.providerId === "google.com");
     
-    return [{...user, isSet:currentUserSet, isAdmin}];
+    return [{...user, isSet:currentUserSet, isAdmin, isGoogleAccount}];
   }
   
   function useAppLogOut(){

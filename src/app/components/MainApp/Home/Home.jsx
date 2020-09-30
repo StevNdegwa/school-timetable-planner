@@ -7,18 +7,20 @@ import {Wrapper, Status} from "./styles";
 export default function Home(props){
   const date = new Date(props.selectedDate);
   return (
-    <Wrapper>
+    <Wrapper admin={props.user.isAdmin}>
       <Status>
         {date.toDateString()}
       </Status>
       <HomeCalendar selectedDate={date} selectDate={props.selectDate}/>
-      <DailySchedule 
-        selectedDate={date} 
-        schedulesList={props.schedulesList} 
-        user={props.user}
-        classesList={props.classesList}
-        subjectsList={props.subjectsList}
-      />
+      {!props.user.isAdmin && 
+        <DailySchedule 
+          selectedDate={date} 
+          schedulesList={props.schedulesList} 
+          user={props.user}
+          classesList={props.classesList}
+          subjectsList={props.subjectsList}
+        />
+      }
     </Wrapper>
   );
 }

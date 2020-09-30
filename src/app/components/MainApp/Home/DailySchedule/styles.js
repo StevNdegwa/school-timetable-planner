@@ -33,5 +33,15 @@ cursor:pointer;
   &.time span.label{
     font-weight:600;
   }
+  &.add-to-calendar{
+    height:50px;
+    padding:5px;
+    text-align:right;
+    &>button{
+      height:40px;
+      padding:0 1em;
+    }
+  }
 }
+
 `

@@ -48,6 +48,10 @@ button{
   &:focus{
     outline:none;
   }
+  &:disabled{
+    background-color:#bdbdbd;
+    color:#bdbdbd;
+  }
   &.primary{
     background-color:#212dce;
     color:white;
@@ -58,7 +62,7 @@ button{
     &:disabled{
       background-color:#bdbdbd;
       color:#263238;
-      box-shadow:0px 0px 2px #bdbdb;
+      box-shadow:0px 0px 2px #bdbdbd;
       &:hover{
         box-shadow:0px 0px 5px #bdbdbd;
       }

@@ -20,10 +20,9 @@ class GoogleCalendar{
   }
   
   static getStartEndDates(start, end, day){
-    let days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
     
     let date = DateTime.local().setZone('Africa/Nairobi'),
-      diff = days.findIndex((d)=>(d === day)) - date.weekday;
+      diff = day - date.weekday;
     
     if(diff > 0){//Move to the day in this week
       date = date.plus({days:diff}).set({minute:0, second:0, millisecond:0});
@@ -41,11 +40,11 @@ class GoogleCalendar{
     
     return new Promise(function(resolve, reject){
       
-      let [startDate, endDate] = GoogleCalendar.getStartEndDates(eventData.start, eventData.end, eventData.day);
+      let [startDate, endDate] = GoogleCalendar.getStartEndDates(eventData.start, eventData.end, eventData.dayIndex);
       
       let event = {
         summary: eventData.subject,
-        location: eventData.class,
+        location: eventData.classLocation,
         description: description,
         start: {
           dateTime: startDate,

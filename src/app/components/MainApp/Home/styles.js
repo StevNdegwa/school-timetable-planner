@@ -1,15 +1,21 @@
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 
 export const Wrapper = styled.div`
 width:100%;
 height:100%;
 display:grid;
-grid-template-columns:50% 50%;
+grid-template-columns:auto 50%;
 grid-template-rows:60px calc(100% - 60px);
 grid-template-areas:
   'status status'
   'calendar assignments';
 overflow:auto;
+${({admin})=> admin && css`
+grid-template-columns:100%;
+grid-template-areas:
+  'status'
+  'calendar';
+`}
 @media only screen and (max-width:900px){
 grid-template-columns:100%;
 grid-template-rows:60px auto auto;

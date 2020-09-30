@@ -62,7 +62,7 @@ class GoogleCalendar{
       let eventPayload = JSON.stringify(event);
       
       var request = window.gapi.client.calendar.events.insert({
-        'calendarId': email,
+        'calendarId':'primary',
         'resource': eventPayload
       });
 
